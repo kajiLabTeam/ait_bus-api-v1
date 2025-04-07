@@ -1,0 +1,175 @@
+<!--
+        Stellar by HTML5 UP
+        html5up.net | @ajlkn
+        Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+
+<!DOCTYPE HTML>
+
+<html lang="ja">
+
+<head>
+    <title>愛工大バス時刻案内</title>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href="static/images/icon512.png">
+    <link rel="manifest" href="manifest.json">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135609072-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-135609072-1');
+    </script>
+    <script>
+        fetch('./static/database/dayinfo.json?ver=2')
+            .then(function (data) {
+                return data.json(); // 読み込むデータをJSONに設定
+            })
+            .then(function (daiya) {
+                // 今日の日付けを取得
+                var date = new Date();
+                month = date.getMonth() + 1;
+                today = date.getFullYear() + "-" + month + "-" + date.getDate();
+
+                // 今日のダイヤを取り出す
+                today_daiya = daiya[today]
+                console.log(today_daiya)
+                if (today_daiya != null) {
+                    window.location.href = "./index.html"; // 通常の遷移
+                }
+            });
+
+        var refreshing;
+        navigator.serviceWorker.addEventListener('controllerchange',
+            function () {
+                if (refreshing) return;
+                refreshing = true;
+                console.log('Service Workerをアップデートしたのでリロードします!!');
+                window.location.reload();
+            }
+        );
+    </script>
+    <script>
+        // 例: 60秒に一回リロード
+        setTimeout("location.reload()", 60000);
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="static/css/main.css?ver=2">
+    <noscript>
+        <link rel="stylesheet" href="static/css/noscript.css">
+    </noscript>
+</head>
+
+<body class="is-preload">
+
+    <!-- ServiceWorkerの設定 -->
+    <script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('sw.js')
+                .then(function () { console.log("Service Worker Registered"); })
+                .catch(function () { console.log("Service Worker Not Registered"); });
+        }
+    </script>
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header" class="alt">
+            <h1>愛工大バス時刻案内</h1>
+            <p>次のバス出発時刻を表示するサービス</p>
+        </header>
+
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li><a href="#first">今日の運行ダイヤ</a></li>
+                <li><a href="#news">お知らせ</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <div id="main">
+
+            <section class="main special">
+                <header class="major">
+                    <h2>【重要なお知らせ】<br>サービス終了のお知らせ</h2>
+                </header>
+                <div class="closeText">
+                    平素は弊サービスのご愛顧を賜り、誠にありがとうございます。<br>
+                    この度、「愛工大バス時刻案内」は、誠に残念ながら管理者の都合により、<br>
+                    今後サービスを継続的に管理・運営していくことが困難となったため、<br>
+                    <span style="font-weight: bold;">2025年度</span>をもちまして、サービスの提供を終了させていただくこととなりました。<br><br>
+                    長年にわたり多くの方にご利用いただきましたこと、心より感謝申し上げます。<br>
+                    現在、信頼のおける第三者へのサービスの移管を検討しておりますが、詳細は改めて告知させて頂きます。<br>
+                    皆様には大変ご迷惑をおかけいたしますが、何卒ご理解賜りますようお願い申し上げます。<br>
+                </div>
+            </section>
+
+            <!-- First Section -->
+            <section id="first" class="main special">
+                <header class="major">
+                    <h2>本日の運行ダイヤ</h2>
+                </header>
+                <ur>
+                    <h1 style="background-color:#DCEDC8">本日バスの運行はありません</h1>
+                </ur>
+            </section>
+
+            <!-- news Section -->
+            <section id="news" class="main special">
+                <header class="major">
+                    <h2>お知らせ</h2>
+                </header>
+                <h2>
+                    <div id="newsTitle">[Update News]</div>
+                </h2>
+
+                <div class="newsText">
+                    <ul>
+                        <li>[2025/04/06]<br>
+                            <span>2025年度の時刻表データを反映しました</span>
+                        </li>
+                        <li>[2024/01/07]<br>
+                            <a href="https://github.com/GanePrivate/FlutterBusInfoApp" style="color:blue;">
+                                Androidアプリの更新版
+                            </a>を公開しました！
+                            <span style="font-size: 75%;"><br>(新規に一から作り直しました)</span>
+                        </li>
+                    </ul>
+                </div>
+                <br>
+        </div>
+
+        <!-- Footer -->
+        <!-- <footer id="footer">
+            <section>
+                <h2>利用者の方へ</h2>
+                <p>不具合がありましたらメールでお知らせ下さい</p>
+            </section>
+            <section>
+                <h2>Contact</h2>
+                <dl class="alt">
+                    <dt>Email</dt>
+                    <dd><a href="#">hoge@aitech.ac.jp</a></dd>
+                </dl>
+            <p class="copyright">&copy; </p>
+        </footer> -->
+
+    </div>
+
+    <!-- Scripts -->
+    <!--script src="static/js/jquery.min.js"></script>-->
+    <script src="static/js/jquery.scrollex.min.js"></script>
+    <script src="static/js/jquery.scrolly.min.js"></script>
+    <script src="static/js/browser.min.js"></script>
+    <script src="static/js/breakpoints.min.js"></script>
+    <script src="static/js/util.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+
+</html>

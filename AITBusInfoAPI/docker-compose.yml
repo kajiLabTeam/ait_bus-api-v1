@@ -1,0 +1,21 @@
+version: "3"
+services:
+  vol_golang:
+    container_name: ${GOLANG_CONTAINER_NAME}
+    build: ./go
+    volumes:
+      - ./go/app:/app
+    command:
+      - "go"
+      - "run"
+      - "main.go"
+    ports:
+      - "${GOLANG_PORT}:8082"
+    env_file:
+      - .env
+    # 自動起動設定
+    restart: always
+networks:
+  default:
+    external: true
+    name: vol_network

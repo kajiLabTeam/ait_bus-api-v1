@@ -1,0 +1,52 @@
+# 指定した日の運行ダイヤを返すエンドポイント
+GET https://bus-api.bigbell.dev/api/v1/mode?date=2023-05-22 HTTP/1.1
+
+###
+
+# 1年分全ての運行ダイヤを返すエンドポイント
+GET https://bus-api.bigbell.dev/api/v1/modeall HTTP/1.1
+
+###
+
+# 次に来るバスの時刻を返すエンドポイント
+GET https://bus-api.bigbell.dev/api/v1/nextbus?offset=0 HTTP/1.1
+
+###
+
+# 指定した日の時刻表を返すエンドポイント
+GET https://bus-api.bigbell.dev/api/v1/timetable?mode=A_toAIT HTTP/1.1
+
+###
+
+# 1年分の全時刻表を返すエンドポイント
+GET https://bus-api.bigbell.dev/api/v1/timetableall HTTP/1.1
+
+###
+
+# 指定した日の運行ダイヤを返すエンドポイント
+GET http://localhost:8080/api/v1/mode?date=2023-05-22 HTTP/1.1
+
+###
+
+# 1年分全ての運行ダイヤを返すエンドポイント
+GET http://localhost:8080/api/v1/modeall HTTP/1.1
+
+###
+
+# 次に来るバスの時刻を返すエンドポイント
+GET http://localhost:8080/api/v1/nextbus?offset=0 HTTP/1.1
+
+###
+
+# 次に来るバスの時刻を返すエンドポイント
+GET http://localhost:8080/api/v1/nextbus?offset=1 HTTP/1.1
+
+###
+
+# 指定した日の時刻表を返すエンドポイント
+GET http://localhost:8080/api/v1/timetable?mode=A_toAIT HTTP/1.1
+
+###
+
+# 1年分の全時刻表を返すエンドポイント
+GET http://localhost:8080/api/v1/timetableall HTTP/1.1

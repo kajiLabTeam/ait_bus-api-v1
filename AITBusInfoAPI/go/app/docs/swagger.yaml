@@ -1,0 +1,179 @@
+basePath: /
+definitions:
+  model.BusState:
+    properties:
+      IsExist:
+        type: boolean
+      IsFirst:
+        type: boolean
+    type: object
+  model.NextBusTimeResponse:
+    properties:
+      busState:
+        $ref: '#/definitions/model.BusState'
+      nextHourToAIT:
+        type: integer
+      nextHourToYakusa:
+        type: integer
+      nextMinuteToAIT:
+        type: integer
+      nextMinuteToYakusa:
+        type: integer
+      schedule:
+        type: string
+    type: object
+  model.OperationMode:
+    properties:
+      date:
+        type: string
+      mode:
+        type: string
+    type: object
+  model.OperationModeAllResponse:
+    properties:
+      operationModes:
+        additionalProperties:
+          $ref: '#/definitions/model.OperationMode'
+        type: object
+    type: object
+  model.OperationModeResponse:
+    properties:
+      operationMode:
+        type: string
+    type: object
+  model.QueryErrorResponse:
+    properties:
+      errorMessage:
+        type: string
+    type: object
+  model.TimeTable:
+    properties:
+      hour:
+        type: integer
+      minutes:
+        items:
+          type: integer
+        type: array
+    type: object
+  model.TimeTableResponse:
+    properties:
+      timeTable:
+        additionalProperties:
+          $ref: '#/definitions/model.TimeTable'
+        type: object
+    type: object
+host: bus-api.bigbell.dev
+info:
+  contact:
+    email: support@swagger.io
+    name: APIサポーター
+    url: http://www.swagger.io/support
+  description: 仕様書に関する内容説明
+  license:
+    name: ライセンス(必須)
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: 仕様書使用する際の注意事項
+  title: APIドキュメントのタイトル
+  version: バージョン(1.0)
+paths:
+  /mode:
+    get:
+      consumes:
+      - application/json
+      description: 指定した日の運行ダイヤを返すエンドポイント
+      parameters:
+      - description: 例：2024-06-05
+        in: query
+        name: date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationModeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.QueryErrorResponse'
+      summary: Get Operation Mode
+      tags:
+      - example
+  /modeall:
+    get:
+      consumes:
+      - application/json
+      description: 1年分全ての運行ダイヤを返すエンドポイント
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OperationModeAllResponse'
+      summary: Get All Operation Mode
+      tags:
+      - example
+  /nextbus:
+    get:
+      consumes:
+      - application/json
+      description: 次に来るバスの時刻を返すエンドポイント
+      parameters:
+      - default: 0
+        description: 0の場合は次のバスの時刻を、1の場合は次の次のバスの時刻を返します
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: <strong>※その日のバスの運行が終了した or バスの運行が無い日の場合は以下の要素はレスポンスに含まれません。</strong><br>
+            <li>`nextHourToAIT`</li><li>`nextHourToYakusa`</li><li>`nextMinuteToAIT`</li><li>`nextMinuteToYakusa`</li>
+          schema:
+            $ref: '#/definitions/model.NextBusTimeResponse'
+      summary: Get Next Bus Time
+      tags:
+      - example
+  /timetable:
+    get:
+      consumes:
+      - application/json
+      description: 指定した運行ダイヤの時刻表を返すエンドポイント
+      parameters:
+      - description: 例：A_toAIT | A_toYakusa | B_toAIT | B_toYakusa | C_toAIT | C_toYakusa
+        in: query
+        name: mode
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TimeTableResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.QueryErrorResponse'
+      summary: Get TimeTable
+      tags:
+      - example
+  /timetableall:
+    get:
+      consumes:
+      - application/json
+      description: 1年分の全時刻表を返すエンドポイント
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TimeTableResponse'
+      summary: Get All TimeTable
+      tags:
+      - example
+swagger: "2.0"
